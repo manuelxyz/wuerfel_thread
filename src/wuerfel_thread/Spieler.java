@@ -1,8 +1,6 @@
 
 package wuerfel_thread;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 /**
@@ -15,14 +13,21 @@ public class Spieler implements Runnable {
 	private Wuerfelbecher wbecher;
 	private int time;
 	private Random rand;
-	private int zaehler = 0;
+	private int zaehler;
 	private int gestime;
 	
+	/**
+	 * Konstruktor von Spieler
+	 * 
+	 * @param name
+	 */
 	public Spieler(String name) {
 		this.spielerName = name;
 		this.wbecher = new Wuerfelbecher();
 		this.rand = new Random();
 		this.time = 0;
+		this.zaehler = 0;
+		this.gestime = 0;
 	}
 	
 	/**
@@ -52,15 +57,15 @@ public class Spieler implements Runnable {
 				this.time = rand.nextInt(3000)+500;
 				Thread.sleep(this.time);
 				this.wbecher.schuetteln();
+				System.out.print( zaehler+1 + ". Versuch: ");
 				this.wbecher.anzeigen();
-				System.out.println("Aktuelle Time: " + this.time);
 				this.zaehler+=1;
 				this.gestime += this.time;
 				
 			}while(!this.wbecher.isPasch());
 			
 			System.out.println("Versuche: " + this.zaehler);
-			System.out.println("Verbrauchte Zeit: " + this.gestime);
+			System.out.println("Verbrauchte Zeit: " + (this.gestime/1000) + "s");
 			
 		}
 		catch(Exception e) {}

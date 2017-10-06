@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package wuerfel_thread;
 
 /**
