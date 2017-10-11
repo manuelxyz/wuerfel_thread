@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class Wuerfel {
 	
-	private int augenzahl;
+	private byte augenzahl;
 	private Random generator;
 	
 	/**
@@ -25,7 +25,7 @@ public class Wuerfel {
 	 * 
 	 * @return Augenzahl
 	 */
-	public int getAugenzahl() {
+	public Byte getAugenzahl() {
 		return this.augenzahl;
 	}
 	
@@ -33,6 +33,6 @@ public class Wuerfel {
 	 * Würfelt eine Zahl von 1-6 und setzt dies als Augenzahl
 	 */
 	public void wuerfeln() {
-		this.augenzahl = this.generator.nextInt(6)+1;
+		this.augenzahl = (byte) (this.generator.nextInt(6)+1);
 	}
 }

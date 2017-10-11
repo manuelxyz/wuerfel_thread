@@ -11,9 +11,10 @@ public class Spieler implements Runnable {
 
 	private String spielerName;
 	private Wuerfelbecher wbecher;
-	private int time;
+	private byte paschwurf;
 	private Random rand;
-	private int zaehler;
+	private int akttime;
+	private int versuche;
 	private int gestime;
 	
 	/**
@@ -24,9 +25,10 @@ public class Spieler implements Runnable {
 	public Spieler(String name) {
 		this.spielerName = name;
 		this.wbecher = new Wuerfelbecher();
+		this.paschwurf = 0;
 		this.rand = new Random();
-		this.time = 0;
-		this.zaehler = 0;
+		this.akttime = 0;
+		this.versuche = 0;
 		this.gestime = 0;
 	}
 	
@@ -48,24 +50,37 @@ public class Spieler implements Runnable {
 	public String getName() {
 		return this.spielerName;
 	}
-
+	
+	/**
+	 * Liefert die Augenzahl zurück, vom letzten Zug also dem Pasch
+	 * 
+	 * @return Paschwurf
+	 */
+	public byte getPaschwurf() {
+		return this.paschwurf;
+	}
+	
 	@Override
 	public void run() {
+		byte aktaugenzahl = 0;
 		try {
 			System.out.println("Name: " + this.spielerName);
 			do {
-				this.time = rand.nextInt(3000)+500;
-				Thread.sleep(this.time);
+				this.akttime = rand.nextInt(3000)+500;
+				Thread.sleep(this.akttime);
 				this.wbecher.schuetteln();
-				System.out.print( zaehler+1 + ". Versuch: ");
+				System.out.print( this.versuche+1 + ". Versuch: ");
 				this.wbecher.anzeigen();
-				this.zaehler+=1;
-				this.gestime += this.time;
+				aktaugenzahl = this.wbecher.getAugenzahl();
+				this.versuche+=1;
+				this.gestime += this.akttime;
 				
 			}while(!this.wbecher.isPasch());
 			
-			System.out.println("Versuche: " + this.zaehler);
-			System.out.println("Verbrauchte Zeit: " + (this.gestime/1000) + "s");
+			this.paschwurf = aktaugenzahl;
+			
+			System.out.println("Versuche: " + this.versuche);
+			System.out.println("Verbrauchte Zeit: " + (this.gestime/1000) + "s\n");
 			
 		}
 		catch(Exception e) {}

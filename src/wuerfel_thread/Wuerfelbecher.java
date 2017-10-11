@@ -39,6 +39,16 @@ public class Wuerfelbecher {
 	}
 	
 	/**
+	 * Liefert die Augenzahl vom Würfelbecher zurück
+	 * 
+	 * @return Augenzahl
+	 */
+	public byte getAugenzahl() {
+		String x = "" + this.wuerfel1.getAugenzahl() + this.wuerfel2.getAugenzahl();
+		return Byte.parseByte(x);
+	}
+	
+	/**
 	 * Prüft ob ein Pasch gewürfelt wurde, um das Spiel als beendet zu erklären
 	 * 
 	 * @return true/false
